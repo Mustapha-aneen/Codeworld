@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="card m-2 p-2">
+        <h6 class="text-center">Search for <span style="font-size:large;">"{{ query }}"</span></h6>
+        <p class="text-center">{{ result }} Result</p>
+      </div>
+    </div>
+    <div class="w-100"></div>
+    {% for post in posts %}
+      <div class="col md-2">
+        <div class="card p-3">
+           
+            <div id="more_actions">
+              
+              <ul id="more_items">
+                <li><a href="{{ post.edit_post_url }}">Edit</a></li>
+                <li><a href="{{ post.get_delete_post_url }}">Delete</a></li>
+                
+              </ul>
+            </div>
+          <div class="view overlay">
+            <img style="height:250px;width:100%;transform:translateX(0%);" src="{{ post.image.url }}" class="card-img-top" >
+            <h3 class="card-title">{{ post.title }}</h3>
+            <p class="card-text">{{ post.description }}</p>
+            <div style="padding-left:20%;" class="btn-group">
+              <div class="row justify-content-md-center">
+                <div class="col">
+                  <a style="color:#000;" href="{{ post.get_absolute_url }}" style="color:#0000;" class="material-icons">comment</a>
+                </div>
+                <div class="col">
+                  <h5 style="color:#000;">{{ post.posts.count }}</h5>
+                </div>
+              </div>
+              <a href="#" ><button class="btn btn-default"></button></a>
+              
+            </div>
+          </div>
+       
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

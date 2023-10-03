@@ -1,0 +1,100 @@
+{% extends 'base.html' %} 
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% block content %}
+<div class="container">
+  <center>
+    <h4>{{ comments.count }} Comments</h4>
+  </center>
+  <div class="row justify-content-md-center">
+    <div class="col">
+      <div class="card p-3">
+        <div class="view overlay">
+          <img style="height:;" class="card-img-top" src="{{ post.image.url }}">
+          <h3 class="card-title">{{ post.title }}</h3>
+          <p class="card-text">{{ post.description }}</p>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col" >
+      {% if comments.count != 0 %}
+        <h4>Posted comments</h4>
+      {% endif %}
+      {% for comment in comments %}
+      <div id="card" class="card p-2" style="border:#12649e solid 2px;margin-top:5%;">
+        <div class="view overly">
+          <h4 id="name" class="card-title">{{ comment.name }}</h4>
+          <p id="body" class="card-text">{{ comment.body }}</p>
+          <button  onclick="remove_comment(this);" id="remove_comment" style="color:red;font-size:xx-large;background:transparent;border:none;float:right;top:25%;position:absolute;left:90%;outline:none;"></button>
+        </div>
+      </div>
+      {% empty %}
+        <h4 style="font-variant:small-caps;">there is no comments yet!</h4>
+      {% endfor %}
+    </div>
+    <div class="w-100"></div>
+    <div class="col">
+      <form action="" class="p-2">
+        <p>post your comment here</p>
+            <p id="a-e"></p>
+        <div class="form-group">
+          <label for="title" class="form-label">
+            <input id="name" placeholder="type your name" type="text" class="form-control">
+          </label>
+        </div>
+        <div class="form-group">
+          <label for="body"body>
+            <textarea id="body" cols="24.5" placeholder="type you comment here.." class="form-control"></textarea>
+          </label>
+          <div class="form-group">
+            <button id="submit" type="button" class="btn btn-primary" style="transform:translateX(50%);margin-top:4%;">Post comment</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+ 
+<script type="text/javascript">
+  var a_e = document.getElementById("a-e")
+  var card = document.getElementById("card")
+  function remove_comment(btn){
+    
+  }
+  $(document).on("click","#submit",function(e){
+    e.preventDefault();
+    let name = $("#name").val();
+    let body = $("#body").val();
+    if(name.length == 0 || body.length == 0){
+        a_e.setAttribute("class","alert alert-warning")
+        a_e.innerText = "All Fields are require"
+    }
+    else{
+        a_e.setAttribute("class","")
+        a_e.innerText = ""
+        $.ajax({
+          type:"POST",
+          data:{
+            "name":name,
+            "body":body,
+            "action":"post_comment",
+            "csrfmiddlewaretoken":"{{csrf_token}}",
+          },
+          success: function(){
+           
+            name = ""
+            body = ""
+            window.open("{% url 'myapp:post_comment' post.publish.year post.publish.month post.publish.day post.slug %}")
+            
+          },
+          error: function(){
+            alert("something wrong")
+          }
+          
+        })
+    } 
+  })
+</script>
+{% endblock %}

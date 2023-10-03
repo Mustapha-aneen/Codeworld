@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-sm-12">
+      <div style="background:var(--main-color);" class="card p-2 m-2">
+        <form action="search" method="get">
+          <input name="query" id="search-bar" placeholder="search post..." class="form-control">
+          <button id="search-ic" type="submit"></button>
+        </form>
+      </div>
+    </div>
+    
+    <div class="w-100"></div>
+    {% for post in posts %}
+      <div class="col m-2">
+        <div class="card p-3">
+          <div class="view overlay">
+            <div id="more_actions">
+              
+              <ul id="more_items">
+                <li><a href="{{ post.edit_post_url }}">Edit</a></li>
+                <li><a href="{{ post.get_delete_post_url }}">Delete</a></li>
+                
+              </ul>
+            </div>
+            <img style="height:250px;width:100%;transform:translateX(0%);" src="{{ post.image.url }}" class="card-img-top" >
+            <h3 class="card-title">{{ post.title }}</h3>
+            <p class="card-text">{{ post.description }}</p>
+            <div style="padding-left:20%;" class="btn-group">
+              <div class="row justify-content-md-center">
+                <div class="col">
+                  <a style="color:#000;" href="{{ post.get_absolute_url }}" style="color:#0000;" class="material-icons">comment</a>
+                </div>
+                <div class="col">
+                  <h5 style="color:#000;">{{ post.posts.count }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    
+    {% include 'pagination.html' with page=posts paginator=paginator %}
+  </div>
+  {% if posts.count > 2 %}
+    
+  {% endif %}
+</div>
+<script type="text/javascript">
+  var more_items = document.querySelector("#more_items")
+  
+  window.onload = function(){
+    hide()
+  }
+  function hide(){
+    //more_items.style.transform = "scale(0)"
+    //more_items.style.transitionDuration = "1s"
+  }
+  function show(btn){
+   
+    more_items.classList.toggle("show")
+    if($(btn).text() == "more_vert"){
+      $(btn).text("close")
+    }
+    else{
+      $(btn).text("more_vert")
+      more_items.classList.toggle("show")
+    }
+  }
+  
+  $(function(){
+    
+    $("#search-ic").click(function(){
+      let query = $('#search-bar').val();
+      $.ajax({
+        type:"GET",
+        data:{
+          "query":query,
+        },
+        success: function(){
+          
+        },
+        error:function(){
+          alert("something wrong")
+        }
+      })
+    })
+  })
+</script>
+{% endblock %}
+
+

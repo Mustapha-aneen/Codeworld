@@ -1,0 +1,49 @@
+{% extends 'base.html' %} 
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% block content %}
+<div style="margin-top:5%;" class="container">
+  <center>
+    <h5 style="font-variant:small-caps;">Delete Post</h5>
+  </center>
+  <div class="row">
+    <div class="col">
+      <div style="height:100%;" class="card p-3">
+        <div class="view overlay">
+          <img style="height:;" class="card-img-top" src="{{ post.image.url }}">
+          <h3 class="card-title">{{ post.title }}</h3>
+          <p class="card-text">{{ post.description }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col">
+      <h4>Are you sure do You want to delete this post</h4>
+      <button id="delete" class="btn btn-danger">DELETE</button>
+      <button id="no" class="btn btn-success">Cancel</button>
+    </div>
+  </div>
+</div>
+ 
+<script type="text/javascript">
+  $("#no").click(function(){
+     window.open("{% url 'myapp:home_page' %}")
+  })
+  $(document).on("click","#delete",function(e){
+        $.ajax({
+          type:"DELETE",
+          headers:{
+            "X-CSRFToken":"{{ csrf_token }}",
+          },
+          success: function(){
+            window.open("{% url 'myapp:home_page' %}")
+          },
+          error: function(){
+            alert("something wrong")
+          }
+          
+        })
+    })
+ 
+</script>
+{% endblock %}

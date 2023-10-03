@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+  #about_top{
+    height: 150px;
+    width: 150px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .des1,.des2,.des3,.des4,.des5{
+      font-family: Times New Roman;
+      margin-top: 5%;
+      line-height: 30px;
+      font-variant: small-caps;
+  }
+</style>
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-12">
+      <img id="about_top" src="{% static 'myapp/logo/codeworld_transparent_logo.png' %}">
+    </div>
+    <div class="col-12">
+        <center>
+            <h4 style="font-variant:small-caps;font-family:Times New Roman;">Welcome to CodeWorld</h4>
+        </center>
+    <div class="col-12">
+        <div class="des1">
+            <p>I'm Smart Cyber, and I'm thrilled to introduce you to CodeWorld, your destination for all things coding and technology.</p>
+        </div>
+    </div>
+    </div>
+    <div class="col-12">
+        <p class="des1">At CodeWorld, we're dedicated to providing you with a platform where you can unleash your creativity and technical skills. Whether you're a seasoned developer or just starting your coding journey, our platform is designed with you in mind.</p>
+    </div>
+    <div class="col-12">
+        <li>Our Key Features:</li>
+    </div>
+    <div class="col-12">
+        <p class="des2"><strong>Create Post</strong>: Dive into the world of coding by creating and sharing your projects and articles. Whether it's web development, app design, or tech tutorials, CodeWorld is your canvas for sharing your expertise.</p>
+    </div>
+    <div class="col-12">
+        <p class="des3"> <strong> Edit Post:</strong> Modify your posts and projects whenever you need to make updates or improvements. We empower you to continuously refine your work and keep it up to date.</p>
+    </div>
+    <div class="col-12">
+        <p class="des4"> <strong> Delete Post:</strong> Don't be afraid to experiment and make mistakes. If you want to remove a post or project, you can easily delete it.</p>
+    </div>
+    <div class="col-12">
+        <p class="des5">Join us at CodeWorld and be a part of a thriving community of tech enthusiasts. Let's code, learn, and grow together!</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

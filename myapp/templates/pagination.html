@@ -1,0 +1,57 @@
+{% load myapp_tags %}
+<style>
+  #next , #previous{
+    color: #000000;
+    font-size: xx-large;
+    text-decoration: none;
+  }
+  #num_page{
+    text-decoration: none;
+    text-align: ;
+    color: #000000;
+  }
+  #num_page_cont{
+    background: #b9c6fe;
+    display: grid;
+    place-items: center;
+    border: #fff solid 1px;
+  }
+  #pages{
+    background: #d2dafb;
+  }
+</style>
+
+{% if page.has_next or page.has_previous %}
+<h5 style="font-variant:small-caps;">More Posts</h5>
+<div id="pages" class="container">
+  <div class="row justify-content-md-center">
+    <div class="col">
+      {% if page.has_previous %}
+        <a id="previous" class="material-icons" href="?page={{ page.previous_page_number }}">arrow_left</a>
+      {% endif %}
+    </div>
+    {% available_page paginator as all_pages  %}
+      {% for num_page in all_pages %}
+        <div id="num_page_cont" class="col">
+          <a id="num_page" href="?page={{ num_page }}">{{ num_page }}</a>
+        </div>
+      {% endfor %}
+    <div class="col">
+      {% if page.has_next %}
+        <a id="next" class="material-icons" href="?page={{ page.next_page_number }}">arrow_right</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endif %}
+<script type="text/javascript">
+  var current = window.location.href
+  var urls = document.querySelectorAll('a')
+  var all_pages = Array.from(urls)
+  var num = {{ all_pages }}
+  $(function(){
+    all_pages.forEach((a)=>{
+      
+    })
+  })
+</script>

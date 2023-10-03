@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="margin-top:5%;" class="container">
+  <center>
+    <h5 style="font-variant:small-caps;">Edit Post</h5>
+  </center>
+  <div style="margin-top:5%;" class="row">
+    <div class="col">
+      <div class="card">
+        <img  class="card-img-top" src="{{ post.image.url }}">
+        <input id="file" type="file" class="form-control">
+      </div>
+      
+    </div>
+    <div class="col">
+       <input id="title" style="font-size:x-large;" type="text" class="form-control card-title" value="{{ post.title }}" >
+        <textarea id="description" rows="5" class="form-control card-text">{{ post.description }}</textarea>
+        <button id="submit" style="margin-top:5%;margin-bottom:5%;" class="btn btn-success">Save changes</button>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(function(){
+    $("#submit").click(function(){
+      if($("#file").val().length <= 4){
+        $("#file").attr("class","alert alert-danger form-control")
+      }else{
+        $("#file").attr("class","form-control")
+        if($("#title").val().length == 0){
+          $("#title").attr("class","alert alert-danger form-control")
+        }else{
+          var form = new FormData()
+          form.append("title",$("#title").val())
+          form.append("description",$("#description").val())
+          form.append("image",$("#file")[0].files[0])
+          form.append("action","edit_post")
+          form.append("csrfmiddlewaretoken","{{ csrf_token }}")
+          $("#title").attr("class","form-control")
+          $.ajax({
+            type:"POST",
+            url:"{% url 'myapp:edit_post' post.publish.day post.slug %}",
+            data:form,
+            processData:false,
+            cache:false,
+            contentType:false,
+            enctype:"multipart/form-data",
+            success: function(){
+              alert("edit complete")
+              //window.open("{% url 'myapp:edit_post' post.publish.day post.slug %}")
+            },
+            error: function(){
+              alert("something wrong")
+            }
+          })
+        }
+      }
+      
+    })
+  })
+</script>
+{% endblock %}
